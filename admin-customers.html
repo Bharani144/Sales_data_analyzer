@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Saravanas Finance – Manage Customers</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+/* NAVBAR */
+.navbar {
+  background: linear-gradient(90deg, #0f172a, #1e3a8a);
+  color: white;
+  padding: 16px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logout-btn {
+  background: #ef4444;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #1e3a8a;
+}
+
+/* FILTER BAR */
+.filters {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.filters input, .filters select {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  width: 220px;
+}
+
+/* EXPORT */
+.export-btns {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.export-btns button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+}
+
+.excel { background: #16a34a; }
+.pdf { background: #dc2626; }
+
+/* TABLE */
+.table-card {
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #1e3a8a;
+  color: white;
+}
+
+th, td {
+  padding: 14px;
+  text-align: left;
+}
+
+tbody tr {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* STATUS */
+.status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  color: white;
+}
+
+.active { background: #22c55e; }
+.closed { background: #ef4444; }
+
+/* ACTIONS */
+.actions button {
+  border: none;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  margin-right: 5px;
+}
+
+.view { background: #2563eb; }
+.call { background: #16a34a; }
+.mail { background: #f59e0b; }
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 13px;
+  color: #64748b;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <h1>Saravanas Finance – Admin Panel</h1>
+  <button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+
+<div class="container">
+
+<h2>Manage Customers</h2>
+
+<!-- FILTERS -->
+<div class="filters">
+  <input type="text" id="search" placeholder="Search name or email" onkeyup="filterTable()">
+
+  <select id="statusFilter" onchange="filterTable()">
+    <option value="All">All</option>
+    <option value="Active">Active</option>
+    <option value="Closed">Closed</option>
+  </select>
+
+  <div class="export-btns">
+    <button class="excel" onclick="exportExcel()">Export Excel</button>
+    <button class="pdf" onclick="exportPDF()">Export PDF</button>
+  </div>
+</div>
+
+<!-- TABLE -->
+<div class="table-card">
+<table id="customerTable">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Loan Type</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Bharani</td>
+      <td>bharani@gmail.com</td>
+      <td>Lorry</td>
+      <td><span class="status active">Active</span></td>
+      <td class="actions">
+        <button class="view" onclick="viewCustomer('Bharani')">View</button>
+        <button class="call" onclick="callCustomer('9876543210')">📞</button>
+        <button class="mail" onclick="mailCustomer('bharani@gmail.com')">✉️</button>
+      </td>
+    </tr>
+
+    <tr>
+      <td>2</td>
+      <td>Boopathi</td>
+      <td>boopathi@gmail.com</td>
+      <td>Land</td>
+      <td><span class="status active">Active</span></td>
+      <td class="actions">
+        <button class="view" onclick="viewCustomer('Boopathi')">View</button>
+        <button class="call" onclick="callCustomer('9876501234')">📞</button>
+        <button class="mail" onclick="mailCustomer('boopathi@gmail.com')">✉️</button>
+      </td>
+    </tr>
+
+    <tr>
+      <td>3</td>
+      <td>Suresh</td>
+      <td>suresh@gmail.com</td>
+      <td>Lorry</td>
+      <td><span class="status closed">Closed</span></td>
+      <td class="actions">
+        <button class="view" onclick="viewCustomer('Suresh')">View</button>
+        <button class="call" onclick="callCustomer('9876509999')">📞</button>
+        <button class="mail" onclick="mailCustomer('suresh@gmail.com')">✉️</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="footer">
+© 2026 Saravanas Finance | Manage Customers
+</div>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+function logout() {
+  localStorage.clear();
+  location.href = "login.html";
+}
+
+function viewCustomer(name) {
+  alert("Viewing customer: " + name);
+}
+
+function callCustomer(number) {
+  window.location.href = "tel:" + number;
+}
+
+function mailCustomer(email) {
+  window.location.href = "mailto:" + email;
+}
+
+/* SEARCH + FILTER */
+function filterTable() {
+  const search = document.getElementById("search").value.toLowerCase();
+  const status = document.getElementById("statusFilter").value;
+  const rows = document.querySelectorAll("#customerTable tbody tr");
+
+  rows.forEach(row => {
+    const text = row.innerText.toLowerCase();
+    const rowStatus = row.querySelector(".status").innerText;
+
+    const matchSearch = text.includes(search);
+    const matchStatus = (status === "All" || rowStatus === status);
+
+    row.style.display = (matchSearch && matchStatus) ? "" : "none";
+  });
+}
+
+/* EXPORT EXCEL */
+function exportExcel() {
+  let csv = "ID,Name,Email,Loan Type,Status\n";
+  document.querySelectorAll("#customerTable tbody tr").forEach(row => {
+    if (row.style.display !== "none") {
+      const cols = row.querySelectorAll("td");
+      csv += `${cols[0].innerText},${cols[1].innerText},${cols[2].innerText},${cols[3].innerText},${cols[4].innerText}\n`;
+    }
+  });
+
+  const link = document.createElement("a");
+  link.href = "data:text/csv;charset=utf-8," + encodeURI(csv);
+  link.download = "customers_report.csv";
+  link.click();
+}
+
+/* EXPORT PDF */
+function exportPDF() {
+  const win = window.open("", "", "width=900,height=650");
+  win.document.write("<html><head><title>Customer Report</title></head><body>");
+  win.document.write("<h2>Saravanas Finance – Customer Report</h2>");
+  win.document.write(document.querySelector(".table-card").innerHTML);
+  win.document.write("</body></html>");
+  win.document.close();
+  win.print();
+}
+</script>
+
+</body>
+</html>
